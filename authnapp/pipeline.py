@@ -6,8 +6,8 @@ import requests
 from django.utils import timezone
 from social_core.exceptions import AuthForbidden
 
-from authnapp.models import ShopUserProfile
-from authnapp.models import ShopUser
+from authnapp.models import ShopUser, ShopUserProfile
+
 
 def save_user_profile(backend, user, response, *args, **kwargs):
     if backend.name != "vk-oauth2":
@@ -37,7 +37,7 @@ def save_user_profile(backend, user, response, *args, **kwargs):
     if data["about"]:
         user.shopuserprofile.aboutMe = data["about"]
 
-    data['bdate'] = data.get("bdate", f"1.1.{timezone.now().date().year - 18}")
+    data["bdate"] = data.get("bdate", f"1.1.{timezone.now().date().year - 18}")
     if data["bdate"]:
         bdate = datetime.strptime(data["bdate"], "%d.%m.%Y").date()
 
